@@ -1,30 +1,26 @@
 import clsx from "clsx";
-import { LANGS, useI18n } from "../i18n";
-import { BtnLabel } from "./ui";
+import { type Lang, LANGS, useI18n } from "../i18n";
 
-/** Compact PT/EN switch: two buttons with aria-pressed. */
+/** Language picker: a native select listing every language in LANGS by its own name. */
 export function LanguageSwitcher({ className }: { className?: string }) {
   const { t, lang, setLang } = useI18n();
   return (
-    <div role="group" aria-label={t("lang.label")} className={clsx("flex shrink-0 overflow-hidden rounded-lg border border-rule", className)}>
+    <select
+      aria-label={t("lang.label")}
+      title={t("lang.label")}
+      data-lang-switch
+      value={lang}
+      onChange={(e) => setLang(e.target.value as Lang)}
+      className={clsx(
+        "min-h-9 shrink-0 rounded-lg border border-rule bg-white px-2 text-sm font-semibold text-ink-soft transition-colors hover:text-brand-700 pointer-coarse:min-h-11",
+        className,
+      )}
+    >
       {LANGS.map((l) => (
-        <button
-          key={l}
-          type="button"
-          lang={l}
-          data-lang-switch={l}
-          aria-pressed={lang === l}
-          aria-label={t(`lang.${l}`)}
-          title={t(`lang.${l}`)}
-          onClick={() => setLang(l)}
-          className={clsx(
-            "inline-flex min-h-9 items-center px-2.5 text-sm leading-none font-semibold transition-colors pointer-coarse:min-h-11",
-            lang === l ? "bg-brand-50 text-brand-700" : "bg-white text-ink-soft hover:bg-brand-50 hover:text-brand-700",
-          )}
-        >
-          <BtnLabel>{t(`lang.short.${l}`)}</BtnLabel>
-        </button>
+        <option key={l} value={l} lang={l}>
+          {t(`lang.${l}`)}
+        </option>
       ))}
-    </div>
+    </select>
   );
 }

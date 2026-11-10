@@ -14,7 +14,7 @@ const STORAGE_KEY = "notifly.lang";
 const DICTS: Record<Lang, Messages> = { "pt-BR": ptBR, en };
 
 function isLang(v: unknown): v is Lang {
-  return v === "pt-BR" || v === "en";
+  return typeof v === "string" && (LANGS as readonly string[]).includes(v);
 }
 
 function storedLang(): Lang | null {

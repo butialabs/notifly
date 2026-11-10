@@ -5,7 +5,6 @@ export const en: Messages = {
     label: "Language",
     "pt-BR": "Português (Brasil)",
     en: "English",
-    short: { "pt-BR": "PT", en: "EN" },
   },
 
   common: {

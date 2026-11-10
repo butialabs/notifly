@@ -26,14 +26,14 @@ export function I18nProvider({ children, onChange }: { children: ReactNode; onCh
     onChangeRef.current?.(next);
   }, []);
 
-  // Remounting drops focus from the switcher; give it back to the chosen language's button.
+  // Remounting drops focus from the switcher; give it back to the language select.
   useEffect(() => {
     if (first.current) {
       first.current = false;
       return;
     }
     if (!document.activeElement || document.activeElement === document.body) {
-      document.querySelector<HTMLElement>(`[data-lang-switch="${lang}"]`)?.focus();
+      document.querySelector<HTMLElement>("[data-lang-switch]")?.focus();
     }
   }, [lang]);
 
