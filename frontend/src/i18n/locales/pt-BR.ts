@@ -34,6 +34,7 @@ export const ptBR = {
     search: "Buscar",
     notifications: "Notificações",
     logout: "Sair",
+    sourceCode: "Código-fonte no GitHub",
   },
 
   api: {

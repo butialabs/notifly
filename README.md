@@ -1,5 +1,13 @@
 # Notifly ✈️
 
+[![CI](https://github.com/butialabs/notifly/actions/workflows/ci.yml/badge.svg)](https://github.com/butialabs/notifly/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/butialabs/notifly/actions/workflows/codeql.yml/badge.svg)](https://github.com/butialabs/notifly/actions/workflows/codeql.yml)
+[![Release](https://img.shields.io/github/v/release/butialabs/notifly?sort=semver)](https://github.com/butialabs/notifly/releases)
+[![Docker image](https://img.shields.io/badge/ghcr.io-butialabs%2Fnotifly-2496ED?logo=docker&logoColor=white)](https://github.com/butialabs/notifly/pkgs/container/notifly)
+[![License: AGPL-3.0](https://img.shields.io/github/license/butialabs/notifly)](LICENSE)
+[![Python 3.12](https://img.shields.io/badge/python-3.12-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![React](https://img.shields.io/badge/react-frontend-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+
 Notifly is a self-hosted flight price tracker. You create a trip and add its flights (outbound, return, internal legs). Notifly re-runs the searches on a schedule, keeps the price history and notifies you when a price drops, rises or crosses a threshold.
 
 > Notifly is not affiliated with or endorsed by Google. It reads the public Google Flights page through an unofficial library, which may break at any time and may not be allowed by Google's Terms of Service. It is meant for personal, low-volume use, and you are responsible for how you run it. Notifly never books anything; you buy on the airline or travel site.

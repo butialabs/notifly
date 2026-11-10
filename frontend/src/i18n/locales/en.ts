@@ -31,6 +31,7 @@ export const en: Messages = {
     search: "Search",
     notifications: "Notifications",
     logout: "Log out",
+    sourceCode: "Source code on GitHub",
   },
 
   api: {
