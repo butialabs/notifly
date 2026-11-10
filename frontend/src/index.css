@@ -1,0 +1,292 @@
+@import "tailwindcss";
+@import "@fontsource-variable/archivo/wdth.css";
+
+/* Light mode only: dark: variants would need .dark, which is never set. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Airmail theme: letter paper, stamp ink, airmail blue and red.
+ * Red (--color-airmail) is reserved for the fired-alert stripe.
+ */
+@theme {
+  /* Type floor: nothing below 14px, so text-xs equals text-sm. */
+  --text-xs: 0.875rem;
+  --text-xs--line-height: 1.25rem;
+  --font-sans: "Archivo Variable", ui-sans-serif, system-ui, "Segoe UI", Roboto, sans-serif;
+
+  --color-paper: #eaf0f8;
+  --color-paper-deep: #dce5f2;
+  --color-ink: #1b1f2b;
+  --color-ink-soft: #4a5268;
+  --color-ink-mute: #5f6880;
+  --color-rule: #c9d4e6;
+
+  --color-brand-50: #eef2fb;
+  --color-brand-100: #dbe3f6;
+  --color-brand-200: #b7c6ec;
+  --color-brand-500: #2b4fb8;
+  --color-brand-600: #1f3a93;
+  --color-brand-700: #172c72;
+  --color-brand-900: #0f1d4d;
+
+  --color-airmail: #d7262e;
+  --color-good: #1f7a46;
+  --color-good-soft: #e3f2e8;
+  --color-bad: #9a4a12;
+  --color-bad-soft: #f6e9dc;
+  --color-danger: #b42318;
+  --color-warn: #8a5a00;
+  --color-warn-soft: #fbf1d9;
+
+
+  --shadow-card: 0 1px 2px rgb(27 31 43 / 0.06), 0 4px 14px -6px rgb(31 58 147 / 0.12);
+  --shadow-pop: 0 12px 32px -8px rgb(15 29 77 / 0.28);
+}
+
+:root {
+  color-scheme: light;
+  font-synthesis: none;
+}
+
+body {
+  @apply bg-paper text-ink antialiased;
+}
+
+::selection {
+  background: var(--color-brand-200);
+  color: var(--color-brand-900);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand-600);
+  outline-offset: 2px;
+}
+
+input,
+textarea,
+select {
+  caret-color: var(--color-brand-600);
+  accent-color: var(--color-brand-600);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-ink-mute);
+  opacity: 1;
+}
+
+* {
+  scrollbar-color: var(--color-brand-200) transparent;
+}
+
+a {
+  text-underline-offset: 3px;
+}
+
+/* Pointer cursor on everything clickable (Tailwind v4 gives <button> the default cursor). */
+button,
+[role="button"],
+[role="switch"],
+[role="option"],
+[role="menuitem"],
+[role="tab"],
+a[href],
+summary,
+select,
+label:has(> input[type="checkbox"]),
+label:has(> input[type="radio"]),
+input[type="checkbox"],
+input[type="radio"],
+input[type="range"],
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
+
+button:disabled,
+[aria-disabled="true"],
+select:disabled,
+input:disabled {
+  cursor: not-allowed;
+}
+
+/* Price as a stamp denomination: condensed, tabular figures */
+@utility denom {
+  font-stretch: 72%;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+}
+
+@utility tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+@utility label-caps {
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-ink-mute);
+}
+
+/* Airmail envelope stripe, only where an alert fired */
+@utility airmail-stripe {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--color-airmail) 0 10px,
+    #fff 10px 16px,
+    var(--color-brand-600) 16px 26px,
+    #fff 26px 32px
+  );
+}
+
+@utility card {
+  @apply rounded-xl bg-white;
+  box-shadow: var(--shadow-card);
+}
+
+/*
+ * Spacing scale: 4 · 8 · 12 · 16 · 24 · 32 (Tailwind 1·2·3·4·6·8).
+ * Cards: 20px on mobile, 28px from sm up.
+ */
+@utility card-pad {
+  padding: 1.25rem;
+  @variant sm {
+    padding: 1.75rem;
+  }
+}
+
+@utility card-px {
+  padding-inline: 1.25rem;
+  @variant sm {
+    padding-inline: 1.75rem;
+  }
+}
+
+/* Card header with a divider (lists) */
+@utility card-head {
+  @apply card-px flex flex-wrap items-center justify-between gap-3 border-b border-rule py-4;
+}
+
+/* List row inside a card */
+@utility card-row {
+  @apply card-px py-4;
+}
+
+/* Page stack: 24px between sections */
+@utility page-stack {
+  @apply flex flex-col gap-6;
+}
+
+/* Section title to content: 16px */
+@utility section-head {
+  @apply mb-4 flex flex-wrap items-center justify-between gap-3;
+}
+
+@utility section-title {
+  @apply text-lg font-bold text-ink;
+}
+
+/*
+ * Controls: three heights (36 · 40 · 48), at least 44px on touch. Height comes from
+ * min-h; text is centered on cap height (ctl-label with text-box) because Archivo's
+ * line box runs tall.
+ */
+@utility btn {
+  @apply inline-flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-lg px-4 py-0 text-sm leading-none font-semibold whitespace-nowrap transition-colors pointer-coarse:min-h-11 disabled:cursor-not-allowed disabled:opacity-40;
+}
+
+@utility btn-sm {
+  @apply min-h-9 px-3 pointer-coarse:min-h-11;
+}
+
+@utility btn-lg {
+  @apply min-h-12 px-6 text-base;
+}
+
+@utility btn-icon {
+  @apply w-10 px-0 pointer-coarse:w-11;
+}
+
+@utility btn-icon-sm {
+  @apply w-9 px-0 pointer-coarse:w-11;
+}
+
+@utility btn-primary {
+  @apply btn bg-brand-600 text-white hover:bg-brand-700;
+}
+
+@utility btn-ghost {
+  @apply btn text-brand-600 hover:bg-brand-50;
+}
+
+@utility btn-plain {
+  @apply btn text-ink hover:bg-brand-50;
+}
+
+@utility btn-outline {
+  @apply btn border border-rule bg-white text-ink hover:border-brand-200 hover:bg-brand-50;
+}
+
+@utility btn-danger {
+  @apply btn text-danger hover:bg-red-50;
+}
+
+@utility ctl-label {
+  display: block;
+  line-height: 1;
+  text-box: trim-both cap alphabetic;
+}
+
+@utility input {
+  @apply block min-h-10 w-full rounded-lg border border-rule bg-white px-3 py-0 text-base leading-none text-ink outline-none focus:border-brand-600 focus:ring-2 focus:ring-brand-200 sm:text-sm;
+}
+
+textarea.input {
+  @apply py-2.5 leading-normal;
+}
+
+@utility label {
+  @apply mb-1.5 block text-sm font-semibold text-ink-soft;
+}
+
+@utility chip {
+  @apply inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-lg border border-rule bg-white px-3 py-0 text-sm leading-none text-ink transition-colors pointer-coarse:min-h-11 hover:border-brand-200 hover:bg-brand-50;
+}
+
+@utility chip-active {
+  @apply border-brand-600 bg-brand-50 font-semibold text-brand-700;
+}
+
+/* Control icons don't shrink */
+:where(.btn, .btn-primary, .btn-ghost, .btn-plain, .btn-outline, .btn-danger, .chip) > svg {
+  flex: none;
+}
+
+@keyframes stamp-strike {
+  0% {
+    transform: scale(1.35) rotate(var(--rot, -12deg));
+    opacity: 0;
+    filter: blur(2px);
+  }
+  60% {
+    transform: scale(0.96) rotate(var(--rot, -12deg));
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% {
+    transform: scale(1) rotate(var(--rot, -12deg));
+    opacity: 1;
+  }
+}
+
+.stamp-strike {
+  animation: stamp-strike 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stamp-strike {
+    animation: none;
+  }
+}

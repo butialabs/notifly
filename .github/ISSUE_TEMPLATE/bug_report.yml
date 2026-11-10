@@ -1,0 +1,35 @@
+name: Bug report
+description: Something isn't working as expected
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! **Security issues must not be reported here**, see [SECURITY.md](../blob/main/SECURITY.md).
+        Before posting logs, remove channel URLs, tokens and proxy credentials.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you did, what you expected and what happened instead.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Image tag or commit (e.g. ghcr.io/butialabs/notifly:1.2.0)
+    validations:
+      required: true
+  - type: dropdown
+    id: install
+    attributes:
+      label: How do you run it?
+      options: [Docker / Compose, From source, Other]
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      render: text

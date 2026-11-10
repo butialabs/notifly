@@ -1,0 +1,27 @@
+Notifly
+Copyright (C) 2026 Notifly contributors
+Licensed under the GNU Affero General Public License v3.0 (see LICENSE).
+
+This product includes or is built with third-party software and data:
+
+Data
+- OurAirports (https://ourairports.com/data/) — airport list, public domain.
+- Unicode CLDR (https://cldr.unicode.org/), via Babel — country names,
+  Unicode License v3.
+- fli / flights (https://github.com/punitarani/fli) — airport and airline
+  code enums used to build backend/app/airports/*.json, MIT License.
+- emoji-mart, @emoji-mart/data, emojibase-data — emoji data, MIT License.
+
+Backend libraries
+- fast-flights (https://github.com/AWeirdDev/flights) — MIT License.
+- Apprise (https://github.com/caronc/apprise) — BSD 2-Clause License.
+- FastAPI, SQLModel, Pydantic, APScheduler — MIT License.
+- Uvicorn — BSD 3-Clause License.
+
+Frontend libraries
+- React, TanStack Query, React Router, Recharts, date-fns, clsx — MIT License.
+- Lucide icons — ISC License.
+- Archivo font (via @fontsource-variable/archivo) — SIL Open Font License 1.1.
+
+Google Flights is a trademark of Google LLC. Notifly is not affiliated with
+or endorsed by Google.

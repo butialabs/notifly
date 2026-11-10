@@ -1,0 +1,15 @@
+data/
+.env
+__pycache__/
+.pytest_cache/
+.venv/
+backend/static/
+node_modules/
+dist/
+.ruff_cache/
+.env.*
+!.env.example
+*.pem
+*.key
+.impeccable/
+*.tsbuildinfo

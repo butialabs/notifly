@@ -1,0 +1,12 @@
+services:
+  notifly:
+    image: ghcr.io/butialabs/notifly:latest
+    container_name: notifly
+    ports:
+      - 127.0.0.1:8000:8000
+    restart: unless-stopped
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - ./data:/data

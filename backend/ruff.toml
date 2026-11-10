@@ -1,0 +1,7 @@
+target-version = "py312"
+line-length = 120
+
+[lint]
+select = ["E", "F", "W", "I", "UP"]
+# `l` para "leg" é idiomático nos providers de voo
+ignore = ["E741", "E501"]
