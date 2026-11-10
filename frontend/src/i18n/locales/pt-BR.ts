@@ -278,7 +278,6 @@ export const ptBR = {
 
   login: {
     password: "Senha",
-    hint: "A senha definida em NOTIFLY_PASSWORD.",
     submit: "Entrar",
   },
 

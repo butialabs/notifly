@@ -48,9 +48,7 @@ export function LoginPage() {
             autoFocus
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-          />
-          <p className="mt-1 text-sm text-ink-mute">{t("login.hint")}</p>
-        </div>
+          />        </div>
         <ErrorBox error={login.error} />
         <Button type="submit" variant="primary" className="w-full" icon={<LogIn size={18} />} loading={login.isPending}>
           {t("login.submit")}

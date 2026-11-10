@@ -274,7 +274,6 @@ export const en: Messages = {
 
   login: {
     password: "Password",
-    hint: "The password set in NOTIFLY_PASSWORD.",
     submit: "Log in",
   },
 
