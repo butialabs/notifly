@@ -12,6 +12,20 @@ Notifly is a self-hosted flight price tracker. You create a trip and add its fli
 
 > Notifly is not affiliated with or endorsed by Google. It reads the public Google Flights page through an unofficial library, which may break at any time and may not be allowed by Google's Terms of Service. It is meant for personal, low-volume use, and you are responsible for how you run it. Notifly never books anything; you buy on the airline or travel site.
 
+## Screenshots
+
+| Trips | Trip |
+|---|---|
+| ![Trips list with the current price of each trip](docs/screenshots/trips.png) | ![A trip with its tracked flights and alerts](docs/screenshots/trip.png) |
+
+| Flight | Search |
+|---|---|
+| ![A tracked flight with buy/wait verdict and price history](docs/screenshots/watch.png) | ![Flight search form](docs/screenshots/search.png) |
+
+| Notifications | Login |
+|---|---|
+| ![Notification channels and delivery history](docs/screenshots/notifications.png) | ![Login page](docs/screenshots/login.png) |
+
 ## Quick start
 
 ```bash
