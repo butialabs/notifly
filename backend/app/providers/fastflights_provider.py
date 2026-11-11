@@ -10,13 +10,15 @@ from __future__ import annotations
 
 import datetime as dt
 import itertools
+import json
 import logging
+import re
 
 from fast_flights import FlightQuery as FFQuery
 from fast_flights import Passengers as FFPassengers
 from fast_flights import create_query
 from fast_flights.exceptions import FlightsNotFound
-from fast_flights.parser import parse
+from fast_flights.parser import parse_js
 
 from app import i18n
 from app.config import get_settings
@@ -31,6 +33,43 @@ CABIN = {"economy": "economy", "premium_economy": "premium-economy", "business":
 STOPS = {"any": None, "nonstop": 0, "one": 1, "two": 2}
 ALLIANCES = {"STAR_ALLIANCE", "ONEWORLD", "SKYTEAM"}
 MAX_PAIRS = 4
+
+
+DATA_SCRIPT_TEXT_RE = re.compile(r"<script[^>]*class=\"?ds:1\"?[^>]*>(.*?)</script>", re.S)
+
+
+def _has_price(item) -> bool:
+    try:
+        return item[1][0][1] is not None
+    except (IndexError, TypeError):
+        return False
+
+
+def parse(html: str) -> list:
+    """Parse the results page with fast-flights, fixing two gaps of its parser.
+
+    fast-flights only reads ``payload[3]`` ("other flights") and skips ``payload[2]``
+    ("best flights"), where Google usually puts the cheapest options; and an itinerary
+    without a price raises IndexError and fails the whole page. We merge both lists,
+    drop the priceless entries and hand the result back to fast-flights' parser.
+    """
+    m = DATA_SCRIPT_TEXT_RE.search(html)
+    if not m:
+        raise FlightsNotFound("no data script on the page")
+    js = m.group(1)
+    head, rest = js.split("data:", 1)
+    data, tail = rest.rsplit(",", 1)
+    if data.endswith("errorHasStatus: true"):
+        raise FlightsNotFound("no flights found; received error")
+    payload = json.loads(data)
+    items = []
+    for idx in (2, 3):
+        block = payload[idx] if len(payload) > idx else None
+        if block and block[0]:
+            items.extend(i for i in block[0] if _has_price(i))
+    if len(payload) > 3:
+        payload[3] = [items or None, *(payload[3] or [None])[1:]]
+    return parse_js(f"{head}data:{json.dumps(payload)},{tail}")
 
 
 def _dt(sd) -> dt.datetime:

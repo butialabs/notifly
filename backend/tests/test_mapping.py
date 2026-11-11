@@ -170,3 +170,36 @@ def test_provider_partial_block_returns_offers(monkeypatch, proxy):
     monkeypatch.setattr(ffp, "_to_offer", lambda f, cur: offer)
     assert ffp.FastFlightsProvider().search(q(), "BRL") == [offer]
     assert len(seen) == 2 and all("tfs" in p for p in seen)
+
+
+def _ff_item(price, code="TK"):
+    seg = [None] * 22
+    seg[3], seg[4], seg[5], seg[6] = "GRU", "Guarulhos", "Pequim", "PEK"
+    seg[8], seg[10], seg[11], seg[17] = [23, 5], [6, 40], 1500, "Boeing 777"
+    seg[20], seg[21] = [2027, 4, 8], [2027, 4, 10]
+    flight = [None] * 23
+    flight[0], flight[1], flight[2] = code, ["Turkish Airlines"], [seg]
+    flight[22] = [None] * 9
+    return [flight, [[None, price]] if price else [[], "token"]]
+
+
+def _ff_html(best, other):
+    payload = [None] * 8
+    payload[2], payload[3] = [best], [other]
+    payload[7] = [None, [[], []]]
+    import json
+
+    js = f"AF_initDataCallback({{key: 'ds:1', hash: '1', data:{json.dumps(payload)}, sideChannel: {{}}}});"
+    return f'<html><script class="ds:1" nonce="x">{js}</script></html>'
+
+
+def test_parse_reads_best_flights_and_skips_priceless():
+    html = _ff_html([_ff_item(8583)], [_ff_item(9510, "EK"), _ff_item(None, "CA")])
+    result = ffp.parse(html)
+    assert sorted(f.price for f in result) == [8583, 9510]
+    offer = ffp._to_offer(result[0], "BRL")
+    assert offer.slices[0].origin == "GRU" and offer.slices[0].destination == "PEK"
+
+
+def test_parse_only_best_flights():
+    assert [f.price for f in ffp.parse(_ff_html([_ff_item(100)], None))] == [100]
