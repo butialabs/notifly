@@ -1,7 +1,7 @@
-fastapi==0.162.*
+fastapi==0.165.*
 uvicorn[standard]==0.54.*
-sqlmodel==0.0.48
+sqlmodel==0.0.50
 apscheduler>=3.11.3,<4
-apprise>=2.1.0
-pydantic-settings>=2.16.2
+apprise>=2.3.0
+pydantic-settings>=2.16.3
 fast-flights==3.1.0
